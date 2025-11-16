@@ -7,7 +7,11 @@ if (!defined('INDEX')) die("");
     <h1>
         Data Keuangan
     </h1>
+
+    <?php if ($_SESSION['role'] === 'admin'): ?>
     <a class="btn btn-success" style="margin-top: 10px;" href="?hal=keuangan-tambah">Tambah</a>
+    <?php endif; ?>
+
 </section>
 
 <!-- Main content -->
@@ -22,18 +26,21 @@ if (!defined('INDEX')) die("");
                             <thead>
                                 <tr style="background: #2c3e50; color: white;">
                                     <th style="border-color: #ddd;">No</th>
-                                    <th style="border-color: #ddd;">Nama Kegiatan</th>
-                                    <th style="border-color: #ddd;">Deskripsi</th>
-                                    <th style="border-color: #ddd;">Tanggal Mulai</th>
-                                    <th style="border-color: #ddd;">Tanggal Selesai</th>
-                                    <th style="border-color: #ddd;">Lokasi</th>
-                                    <th style="border-color: #ddd;">Dibuat Oleh</th>
+                                    <th style="border-color: #ddd;">Tanggal</th>
+                                    <th style="border-color: #ddd;">Jenis</th>
+                                    <th style="border-color: #ddd;">Jumlah</th>
+                                    <th style="border-color: #ddd;">Sumber</th>
+                                    <th style="border-color: #ddd;">Keterangan</th>
+                                    <th style="border-color: #ddd;">Donasi</th>
+                                    <th style="border-color: #ddd;">Kategori</th>
+                                    <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <th style="border-color: #ddd;">Aksi</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                            $query = "SELECT k.*, s.nama as nama_pembuat FROM kegiatan_masjid k INNER JOIN users s ON k.dibuat_oleh = s.id_user ORDER BY id_kegiatan DESC";
+                            $query = "SELECT IFNULL(d.keterangan, '-') as keterangan_donasi, IFNULL(ku.nama_kategori, '-') as nama_kategori, k.* FROM keuangan k LEFT JOIN donasi d ON k.id_donasi = d.id_donasi LEFT JOIN kategori_keuangan ku ON ku.id_kategori = k.id_kategori ORDER BY k.id_keuangan DESC, k.tanggal DESC";
                             $result = mysqli_query($con, $query);
                             $no = 0;
 
@@ -42,29 +49,31 @@ if (!defined('INDEX')) die("");
                             ?>
                                 <tr>
                                     <td style="border-color: #ddd;"><?= $no ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['nama_kegiatan'] ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['deskripsi'] ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['tanggal_mulai'] ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['tanggal_selesai'] ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['lokasi'] ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['nama_pembuat'] ?></td>
+                                    <td style="border-color: #ddd;"><?= $data['tanggal'] ?></td>
+                                    <td style="border-color: #ddd;"><?= $data['jenis'] ?></td>
+                                    <td style="border-color: #ddd;"><?= rupiah($data['jumlah']) ?></td>
+                                    <td style="border-color: #ddd;"><?= $data['sumber'] ?></td>
+                                    <td style="border-color: #ddd;"><?= $data['keterangan'] ?></td>
+                                    <td style="border-color: #ddd;"><?= $data['keterangan_donasi'] ?></td>
+                                    <td style="border-color: #ddd;"><?= $data['nama_kategori'] ?></td>
+                                    <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <!-- Tombol Aksi -->
                                     <td style="border-color: #ddd;">
                                         <!-- Tombol Edit -->
-                                        <a href="?hal=kegiatan-masjid-edit&id=<?= $data['id_kegiatan'] ?>"
+                                        <a href="?hal=keuangan-edit&id=<?= $data['id_keuangan'] ?>"
                                             class="btn btn-warning btn-sm">
                                             Edit
                                         </a>
 
                                         <!-- Tombol Hapus dengan Modal Konfirmasi -->
                                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#modal-hapus-<?= $data['id_kegiatan'] ?>">
+                                            data-target="#modal-hapus-<?= $data['id_keuangan'] ?>">
                                             Hapus
                                         </button>
 
                                         <!-- Modal Konfirmasi Hapus -->
                                         <div class="modal modal-success fade"
-                                            id="modal-hapus-<?= $data['id_kegiatan'] ?>">
+                                            id="modal-hapus-<?= $data['id_keuangan'] ?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -74,7 +83,7 @@ if (!defined('INDEX')) die("");
                                                         <h4 class="modal-title">Konfirmasi Hapus</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Apakah Anda yakin ingin menghapus kegiatan ini?</p>
+                                                        <p>Apakah Anda yakin ingin menghapus data keuangan ini?</p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <!-- Tombol Batal -->
@@ -82,13 +91,14 @@ if (!defined('INDEX')) die("");
                                                             data-dismiss="modal">Batal</button>
 
                                                         <!-- Tombol Hapus -->
-                                                        <a href="?hal=kegiatan-masjid-hapus&id=<?= $data['id_kegiatan'] ?>"
+                                                        <a href="?hal=keuangan-hapus&id=<?= $data['id_keuangan'] ?>"
                                                             class='btn btn-outline'>Hapus</a>
                                                     </div>
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
                                     </td>
+                                    <?php endif; ?>
                                 </tr>
                                 <?php
                             }

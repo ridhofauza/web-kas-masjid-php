@@ -50,8 +50,9 @@ if (!$data) {
                      <div class="form-group row" style="display: flex; align-items: center;">
                         <label for="kegiatan" class="col-sm-2 col-form-label">Kegiatan</label>
                         <div class="col-sm-6">
-                           <select name="kegiatan" id="kegiatan" class="form-control" required>
+                           <select name="kegiatan" id="kegiatan" class="form-control">
                               <option value="" disabled selected hidden>Pilih Kegiatan</option>
+                              <option value="">-</option>
                               <?php
                               $sql_kegiatan = "SELECT id_kegiatan, nama_kegiatan FROM kegiatan_masjid";
                               $stmt = mysqli_prepare($con, $sql_kegiatan);

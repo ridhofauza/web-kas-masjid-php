@@ -49,8 +49,8 @@
             Kategori Keuangan</a></li>
             <li class="<?php if ($current_page == 'keuangan') echo 'active'; ?>"><a href=" ?hal=keuangan">
             Keuangan</a></li>
-            <li class="<?php if ($current_page == 'transaksi') echo 'active'; ?>"><a href=" ?hal=transaksi">
-                    Transaksi</a></li>
+            <!-- <li class="<?php if ($current_page == 'transaksi') echo 'active'; ?>"><a href=" ?hal=transaksi">
+                    Transaksi</a></li> -->
             <li class="<?php if ($current_page == 'laporan') echo 'active'; ?>"><a href="?hal=laporan"> Laporan</a>
             </li>
 

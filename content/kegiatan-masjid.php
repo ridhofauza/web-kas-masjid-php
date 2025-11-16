@@ -7,7 +7,9 @@ if (!defined('INDEX')) die("");
     <h1>
         Data Kegiatan Masjid
     </h1>
+    <?php if ($_SESSION['role'] === 'admin'): ?>
     <a class="btn btn-success" style="margin-top: 10px;" href="?hal=kegiatan-masjid-tambah">Tambah</a>
+    <?php endif; ?>
 </section>
 
 <!-- Main content -->
@@ -28,7 +30,9 @@ if (!defined('INDEX')) die("");
                                     <th style="border-color: #ddd;">Tanggal Selesai</th>
                                     <th style="border-color: #ddd;">Lokasi</th>
                                     <th style="border-color: #ddd;">Dibuat Oleh</th>
+                                    <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <th style="border-color: #ddd;">Aksi</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,6 +52,7 @@ if (!defined('INDEX')) die("");
                                     <td style="border-color: #ddd;"><?= $data['tanggal_selesai'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['lokasi'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['nama_pembuat'] ?></td>
+                                    <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <!-- Tombol Aksi -->
                                     <td style="border-color: #ddd;">
                                         <!-- Tombol Edit -->
@@ -89,6 +94,7 @@ if (!defined('INDEX')) die("");
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
                                     </td>
+                                    <?php endif; ?>
                                 </tr>
                                 <?php
                             }

@@ -9,7 +9,8 @@ if (!defined("INDEX")) die("");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $id_donasi = $_POST['id_donasi'];
    $id_donatur = $_POST['donatur'];
-   $id_kegiatan = $_POST['kegiatan'];
+   $id_kegiatan = isset($_POST['kegiatan']) ? $_POST['kegiatan'] : null;
+   $id_kegiatan = empty($id_kegiatan) ? null : $id_kegiatan;
    $tanggal_donasi = $_POST['tanggal_donasi'];
    $jumlah = htmlspecialchars($_POST['jumlah']);
    $keterangan = htmlspecialchars($_POST['keterangan']);

@@ -9,8 +9,8 @@
         "transaksi-edit",
         "transaksi-update",
         "transaksi-hapus",
-        "laporan",
-        "laporan-cetak",
+        "laporan2",
+        "laporan2-cetak",
         "pengguna",
         "pengguna-tambah",
         "pengguna-insert",
@@ -44,6 +44,11 @@
         "keuangan-edit",
         "keuangan-update",
         "keuangan-hapus",
+        "laporan",
+        "laporan-tambah",
+        "laporan-insert",
+        "laporan-hapus",
+        "laporan-data-ajax"
     ];
 
     if (isset($_GET['hal'])) {

@@ -1,6 +1,7 @@
 <?php
-    if(!defined('INDEX')) die("");
+if (!defined('INDEX')) die("");
 
+/*
     $pemasukan = mysqli_fetch_assoc(mysqli_query($con, "
     SELECT SUM(nominal) AS data 
     FROM transaksi 
@@ -17,7 +18,45 @@
         SELECT SUM(nominal) AS data 
         FROM transaksi 
         WHERE MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
+    ")); */
+
+$pemasukan = mysqli_fetch_assoc(mysqli_query($con, "
+    SELECT SUM(x.jumlah) as data FROM (SELECT
+    'pemasukan' AS jenis,
+    d.jumlah
+FROM
+    donasi d
+WHERE
+    d.status_verifikasi = 'verifikasi' AND MONTH(d.tanggal_donasi) = MONTH(CURDATE()) AND YEAR(d.tanggal_donasi) = YEAR(CURDATE())
+UNION ALL
+SELECT
+    k.jenis,
+    k.jumlah
+FROM
+    keuangan k
+WHERE
+    MONTH(k.tanggal) = MONTH(CURDATE()) AND YEAR(k.tanggal) = YEAR(CURDATE())) x WHERE x.jenis = 'pemasukan';
     "));
+
+$pengeluaran = mysqli_fetch_assoc(mysqli_query($con, "
+    SELECT SUM(x.jumlah) as data FROM (SELECT
+    'pemasukan' AS jenis,
+    d.jumlah
+FROM
+    donasi d
+WHERE
+    d.status_verifikasi = 'verifikasi' AND MONTH(d.tanggal_donasi) = MONTH(CURDATE()) AND YEAR(d.tanggal_donasi) = YEAR(CURDATE())
+UNION ALL
+SELECT
+    k.jenis,
+    k.jumlah
+FROM
+    keuangan k
+WHERE
+    MONTH(k.tanggal) = MONTH(CURDATE()) AND YEAR(k.tanggal) = YEAR(CURDATE())) x WHERE x.jenis = 'pengeluaran';
+    "));
+
+$saldo['data'] = $pemasukan['data'] - $pengeluaran['data'];
 ?>
 
 <!-- Content Header (Page header) -->
@@ -35,7 +74,7 @@
             <!-- small box -->
             <div class="small-box bg-green" style="padding-top: 5px; padding-bottom: 5px">
                 <div class="inner">
-                    <h3><?= rupiah($pemasukan['data'] ?? 0)?></h3>
+                    <h3><?= rupiah($pemasukan['data'] ?? 0) ?></h3>
 
                     <p>Pemasukan Bulan Ini</p>
                 </div>
@@ -50,7 +89,7 @@
             <!-- small box -->
             <div class="small-box bg-aqua" style="padding-top: 5px; padding-bottom: 5px">
                 <div class="inner">
-                    <h3><?= rupiah(abs($pengeluaran['data'] ?? 0))?></h3>
+                    <h3><?= rupiah(abs($pengeluaran['data'] ?? 0)) ?></h3>
 
                     <p>Pengeluaran Bulan Ini</p>
                 </div>
@@ -65,9 +104,9 @@
             <!-- small box -->
             <div class="small-box bg-yellow" style="padding-top: 5px; padding-bottom: 5px">
                 <div class="inner">
-                    <h3><?=rupiah($saldo['data'] ?? 0)?></h3>
+                    <h3><?= rupiah($saldo['data'] ?? 0) ?></h3>
 
-                    <p>Saldo</p>
+                    <p>Saldo Akhir Bulan Ini</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-cash"></i>

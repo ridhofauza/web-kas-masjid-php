@@ -1,255 +1,113 @@
 <?php
-if (!defined("INDEX")) die("");
-
-// Inisialisasi variabel
-$dataTransaksi = [];
-$tahun = isset($_POST['tahun']) ? $_POST['tahun'] : '';
-$bulan = isset($_POST['bulan']) ? $_POST['bulan'] : '';
-
-// Proses form jika ada data yang dikirimkan
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tahun = $_POST['tahun'];
-    $bulan = $_POST['bulan'];
-
-    // Query untuk mengambil data berdasarkan bulan dan tahun
-    global $con;
-    $query = "SELECT 
-                    tanggal,
-                    nama,
-                    kategori,
-                    nominal,
-                    rincian
-              FROM transaksi 
-              WHERE YEAR(tanggal) = ? AND MONTH(tanggal) = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'ii', $tahun, $bulan);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-
-    $dataTransaksi = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $dataTransaksi[] = $row;
-    }
-    mysqli_stmt_close($stmt); // Tutup statement
-}
-
-// Fungsi untuk menghasilkan PDF
-function generatePDF($data, $tahun, $bulan) {
-    require('fpdf/fpdf.php');
-
-    // Array nama bulan dalam bahasa Indonesia
-    $namaBulan = [
-        1 => 'Januari',
-        2 => 'Februari',
-        3 => 'Maret',
-        4 => 'April',
-        5 => 'Mei',
-        6 => 'Juni',
-        7 => 'Juli',
-        8 => 'Agustus',
-        9 => 'September',
-        10 => 'Oktober',
-        11 => 'November',
-        12 => 'Desember'
-    ];
-    
-    // Ambil nama bulan dari array
-    $namaBulanCetak = isset($namaBulan[$bulan]) ? $namaBulan[$bulan] : '';
-
-    // Inisialisasi PDF
-    $pdf = new FPDF();
-    $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(0, 10, 'Laporan Transaksi Bulan '.$namaBulanCetak.' Tahun '.$tahun, 0, 1, 'C');
-
-    // Header tabel
-    $pdf->SetFont('Arial', 'B', 12);
-    
-    // Style tabel
-    $pdf->SetXY(10, 30); // Ubah nilai Y menjadi 30
-    $pdf->Cell(10, 7, 'No',1,0,'C');
-    $pdf->Cell(30, 7, 'Tanggal',1,0,'C');
-    $pdf->Cell(40, 7, 'Nama',1,0,'C');
-    $pdf->Cell(40, 7, 'Kategori',1,0,'C');
-    $pdf->Cell(30, 7, 'Nominal',1,0,'C');
-    $pdf->Cell(40, 7, 'Rincian',1,0,'C');
-    $pdf->Ln();
-
-    // Data tabel
-    $pdf->SetFont('Arial', '', 10);
-    $totalNominal = 0; // Variabel untuk menyimpan total nominal
-
-    if (count($data) > 0) {
-        $y = 37; // Ubah nilai Y menjadi 37
-        $no = 1;
-        foreach ($data as $row) {
-            $pdf->SetXY(10, $y);
-            $pdf->Cell(10, 6, $no++, 1, 0, 'C'); // Alignment center
-            $pdf->Cell(30, 6, $row['tanggal'], 1, 0, 'C');
-            $pdf->Cell(40, 6, $row['nama'], 1, 0, 'C');
-            $pdf->Cell(40, 6, $row['kategori'], 1, 0, 'C');
-            $pdf->Cell(30, 6, rupiah($row['nominal']), 1, 0, 'C');
-            // Menggunakan html_entity_decode untuk memastikan karakter khusus ditampilkan dengan benar
-            $pdf->Cell(40, 6, html_entity_decode($row['rincian']), 1, 0, 'C');        
-            $pdf->Ln();
-            $y += 6;
-
-            // Tambahkan nominal ke total
-            $totalNominal += $row['nominal'];
-        }
-
-        // Tambahkan baris total di bawah tabel
-        $pdf->SetXY(10, $y);
-        $pdf->SetFont('Arial', 'B', 10);
-        $pdf->Cell(120, 6, 'Total', 1, 0, 'C');
-        $pdf->Cell(30, 6, rupiah($totalNominal), 1, 0, 'C');
-        $pdf->Cell(40, 6, '', 1, 0, 'C');
-        
-    }else{
-        $pdf->SetFont('Arial', 'I', 10);
-        $pdf->SetXY(10, 47);
-        $pdf->Cell(190, 7, 'Data tidak ditemukan', 0, 0, 'C');
-    }
-
-    ob_clean();
-    return @$pdf->Output('D', 'laporan_transaksi.pdf');
-}
-
+if (!defined('INDEX')) die("");
 ?>
 
-<section class="content">
-    <div class="box box-body">
-        <div class="box-header with-border">
-            <h3 class="box-title">Laporan</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <form action="" method="POST">
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Tahun</label>
-                            <select class="form-control" name="tahun" id="tahunSelect">
-                                <option value="">Pilih Tahun</option>
-                                <?php for($y=2020; $y<=date('Y'); $y++): ?>
-                                <option value="<?=$y?>" <?=($y==$tahun)?'selected':''?>><?=$y?></option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Bulan</label>
-                            <select class="form-control" name="bulan" id="bulanSelect">
-                                <option value="">Pilih Bulan</option>
-                                <?php 
-                                $namaBulan = array(
-                                    1 => 'Januari',
-                                    2 => 'Februari',
-                                    3 => 'Maret',
-                                    4 => 'April',
-                                    5 => 'Mei',
-                                    6 => 'Juni',
-                                    7 => 'Juli',
-                                    8 => 'Agustus',
-                                    9 => 'September',
-                                    10 => 'Oktober',
-                                    11 => 'November',
-                                    12 => 'Desember'
-                                );
-                                for ($m=1; $m<=12; $m++): ?>
-                                <option value="<?=$m?>" <?=($m==$bulan)?'selected':''?>>
-                                    <?=$namaBulan[$m]?>
-                                </option>
-                                <?php endfor; ?>
-                            </select>
-                        </div>
-                    </div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+   <h1>
+      Data Laporan
+   </h1>
 
-                    <div class="col-md-6" style="margin-top:25px; margin-bottom: 20px;">
-                        <button type="submit" class="btn btn-primary">Cek Transaksi</button>
-                        <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
-                        <a href="?hal=laporan&cetak=pdf&tahun=<?=$tahun?>&bulan=<?=$bulan?>"
-                            class="btn btn-success">Cetak PDF</a>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </form>
-
-            <div class="table-responsive">
-                <table id="example2" class="table table-bordered table-striped" style="border-color: #ddd;">
-                    <thead>
-                        <tr style="background: #2c3e50; color: white;">
-                            <th style="border-color: #ddd;">No</th>
-                            <th style="border-color: #ddd;">Tanggal</th>
-                            <th style="border-color: #ddd;">Nama</th>
-                            <th style="border-color: #ddd;">Kategori</th>
-                            <th style="border-color: #ddd;">Nominal</th>
-                            <th style="border-color: #ddd;">Rincian</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($dataTransaksi)): ?>
-                        <?php foreach ($dataTransaksi as $index => $row): ?>
-                        <tr>
-                            <td style="border-color: #ddd;"><?= ($index + 1) ?></td>
-                            <td style="border-color: #ddd;"><?= $row['tanggal'] ?></td>
-                            <td style="border-color: #ddd;"><?= $row['nama'] ?></td>
-                            <td style="border-color: #ddd;"><?= $row['kategori'] ?></td>
-                            <td style="border-color: #ddd;"><?= rupiah($row['nominal'])?></td>
-                            <td style="border-color: #ddd;"><?= $row['rincian'] ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                        <?php else: ?>
-                        <tr>
-                            <td colspan="6">Tidak ada data</td>
-                        </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+   <?php if ($_SESSION['role'] === 'admin'): ?>
+   <a class="btn btn-success" style="margin-top: 10px;" href="?hal=laporan-tambah">Tambah</a>
+   <?php endif; ?>
 </section>
 
-<?php
-// Handle request cetak PDF
-if (isset($_GET['cetak']) && $_GET['cetak'] === 'pdf') {
-    // Ambil tahun dan bulan dari URL
-    $tahun = $_GET['tahun'] ?? date('Y');
-    $bulan = $_GET['bulan'] ?? date('m');
+<!-- Main content -->
+<section class="content container-fluid">
+   <div class="row">
+      <div class="col-xs-12">
+         <div class="box">
+            <!-- /.box-header -->
+            <div class="box-body">
+               <div class="table-responsive">
+                  <table id="example2" class="table table-bordered table-striped" style="border-color: #ddd;">
+                     <thead>
+                        <tr style="background: #2c3e50; color: white;">
+                           <th style="border-color: #ddd;">No</th>
+                           <th style="border-color: #ddd;">Periode</th>
+                           <th style="border-color: #ddd;">Total Pemasukan</th>
+                           <th style="border-color: #ddd;">Total Pengeluaran</th>
+                           <th style="border-color: #ddd;">Saldo Akhir</th>
+                           <th style="border-color: #ddd;">Dibuat Oleh</th>
+                           <th style="border-color: #ddd;">Tanggal Dibuat</th>
+                           <th style="border-color: #ddd;">Aksi</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <?php
+                        $query = "SELECT l.*, s.nama as nama_pembuat FROM laporan l INNER JOIN users s ON l.dibuat_oleh = s.id_user ORDER BY id_laporan DESC";
+                        $result = mysqli_query($con, $query);
+                        $no = 0;
 
-    // Query untuk mengambil data transaksi
-    global $con;
-    $query = "SELECT 
-                    tanggal,
-                    nama,
-                    kategori,
-                    nominal,
-                    rincian
-              FROM transaksi 
-              WHERE YEAR(tanggal) = ? AND MONTH(tanggal) = ?";
-    $stmt = mysqli_prepare($con, $query);
-    mysqli_stmt_bind_param($stmt, 'ii', $tahun, $bulan);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+                        while ($data = mysqli_fetch_assoc($result)) {
+                           $no++;
+                        ?>
+                           <tr>
+                              <td style="border-color: #ddd;"><?= $no ?></td>
+                              <td style="border-color: #ddd;"><?= $data['periode'] ?></td>
+                              <td style="border-color: #ddd;"><?= rupiah($data['total_pemasukan']) ?></td>
+                              <td style="border-color: #ddd;"><?= rupiah($data['total_pengeluaran']) ?></td>
+                              <td style="border-color: #ddd;"><?= rupiah($data['saldo_akhir']) ?></td>
+                              <td style="border-color: #ddd;"><?= $data['nama_pembuat'] ?></td>
+                              <td style="border-color: #ddd;"><?= $data['tanggal_dibuat'] ?></td>
+                              <!-- Tombol Aksi -->
+                              <td style="border-color: #ddd;">
+                                 <!-- Tombol Edit -->
+                                 <a href="<?= './'.$data['file_pdf'] ?>" target="_blank"
+                                    class="btn btn-primary btn-sm">
+                                    Lihat
+                                 </a>
 
-    $dataTransaksi = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $dataTransaksi[] = $row;
-    }
-    
-    generatePDF($dataTransaksi, $tahun, $bulan);
-    mysqli_stmt_close($stmt); // Tutup statement
-}
-?>
+                                 <?php if ($_SESSION['role'] === 'admin'): ?>
+                                 <!-- Tombol Hapus dengan Modal Konfirmasi -->
+                                 <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                                    data-target="#modal-hapus-<?= $data['id_laporan'] ?>">
+                                    Hapus
+                                 </button>
 
-<script>
-// Reset dropdown ke "Pilih Tahun" dan "Pilih Bulan" hanya saat refresh halaman
-document.addEventListener("DOMContentLoaded", function() {
-    <?php if (!$_SERVER['REQUEST_METHOD'] === 'POST'): ?>
-    document.getElementById("tahunSelect").value = "";
-    document.getElementById("bulanSelect").value = "";
-    <?php endif; ?>
-});
-</script>
+                                 <!-- Modal Konfirmasi Hapus -->
+                                 <div class="modal modal-success fade"
+                                    id="modal-hapus-<?= $data['id_laporan'] ?>">
+                                    <div class="modal-dialog">
+                                       <div class="modal-content">
+                                          <div class="modal-header">
+                                             <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                             <h4 class="modal-title">Konfirmasi Hapus</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                             <p>Apakah Anda yakin ingin menghapus laporan ini?</p>
+                                          </div>
+                                          <div class="modal-footer">
+                                             <!-- Tombol Batal -->
+                                             <button type="button" class="btn btn-outline pull-left"
+                                                data-dismiss="modal">Batal</button>
+
+                                             <!-- Tombol Hapus -->
+                                             <a href="?hal=laporan-hapus&id=<?= $data['id_laporan'] ?>&file=<?= $data['file_pdf'] ?>"
+                                                class='btn btn-outline'>Hapus</a>
+                                          </div>
+                                       </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                 </div><!-- /.modal -->
+                                 <?php endif; ?>
+                              </td>
+                           </tr>
+                        <?php
+                        }
+                        ?>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <!-- /.box-body -->
+         </div>
+         <!-- /.box -->
+      </div>
+      <!-- /.col -->
+   </div>
+
+</section>
+<!-- /.content -->

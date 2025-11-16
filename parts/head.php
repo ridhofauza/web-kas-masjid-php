@@ -14,7 +14,7 @@ switch ($page) {
     case 'transaksi-hapus':
         $title = "Kas Masjid | Transaksi";
         break;
-    case 'laporan':
+    case 'laporan2':
         $title = "Kas Masjid | Laporan";
         break;
     case 'pengguna':
@@ -61,6 +61,12 @@ switch ($page) {
     case 'keuangan-update':
     case 'keuangan-hapus':
         $title = "Kas Masjid | Keuangan";
+        break;
+    case 'laporan':
+    case 'laporan-tambah':
+    case 'laporan-insert':
+    case 'laporan-hapus':
+        $title = "Kas Masjid | Laporan";
         break;
     default:
         $title = "Kas Masjid | Halaman Tidak Ditemukan";
