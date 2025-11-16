@@ -12,7 +12,7 @@ $role = htmlspecialchars($_POST['role']);
 if (isset($_FILES['foto_profil']) && $_FILES['foto_profil']['error'] == 0) {
     $upload_dir = 'uploads/'; // Pastikan folder ini ada dan writable
     $file_name = basename($_FILES['foto_profil']['name']);
-    $target_file = $upload_dir . $file_name;
+    $target_file = $upload_dir .date('YmdHis') .'_'. $file_name;
 
     // Memindahkan file ke folder tujuan
     if (move_uploaded_file($_FILES['foto_profil']['tmp_name'], $target_file)) {

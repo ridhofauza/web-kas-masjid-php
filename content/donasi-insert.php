@@ -15,7 +15,7 @@ $keterangan = htmlspecialchars($_POST['keterangan']);
 if (isset($_FILES['bukti_transfer']) && $_FILES['bukti_transfer']['error'] == 0) {
     $upload_dir = 'uploads/bukti_transfer/'; // Pastikan folder ini ada dan writable
     $file_name = basename($_FILES['bukti_transfer']['name']);
-    $target_file = $upload_dir . $file_name;
+    $target_file = $upload_dir . date('YmdHis') .'_'. $file_name;
 
     // Memindahkan file ke folder tujuan
     if (move_uploaded_file($_FILES['bukti_transfer']['tmp_name'], $target_file)) {
