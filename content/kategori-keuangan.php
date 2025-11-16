@@ -25,7 +25,7 @@ if (!defined('INDEX')) die("");
                             <thead>
                                 <tr style="background: #2c3e50; color: white;">
                                     <th style="border-color: #ddd;">No</th>
-                                    <th style="border-color: #ddd;">Nama Kegiatan</th>
+                                    <th style="border-color: #ddd;">Nama Kategori</th>
                                     <th style="border-color: #ddd;">Deskripsi</th>
                                     <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <th style="border-color: #ddd;">Aksi</th>
