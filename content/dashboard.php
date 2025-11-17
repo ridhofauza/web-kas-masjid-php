@@ -115,5 +115,91 @@ $saldo['data'] = $pemasukan['data'] - $pengeluaran['data'];
             </div>
         </div>
     </div>
+
+    <!-- Kegiatan -->
+    <div class="box box-body">
+        <div class="box-header with-border">
+            <h3 class="box-title">Agenda & Kegiatan Mendatang</h3>
+        </div>
+        <!-- box body -->
+        <div class="box-body">
+            <div class="row">
+                <?php
+                $query_activity = "SELECT nama_kegiatan, lokasi, tanggal_mulai FROM kegiatan_masjid ORDER BY id_kegiatan DESC LIMIT 3";
+                $result = mysqli_query($con, $query_activity);
+                while ($data = mysqli_fetch_assoc($result)) {
+                    $date = new DateTime($data['tanggal_mulai']);
+                    $tanggal = $date->format('d');
+                    $tahun = $date->format('Y');
+                    $angka_bulan = $date->format('m');
+                    $map_bulan = mapMonth();
+                    $bulan = $map_bulan[$angka_bulan];
+                ?>
+                    <!-- Start box activity -->
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <!-- small box -->
+                        <div style="border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 8px 20px; margin: 3px; max-width: 420px;">
+                            <div>
+                                <div class="row">
+                                    <!-- left box -->
+                                    <div class="col-lg-3 text-center" style="background-color: #f4f4f4; border-radius: 8px; padding: 5px;">
+                                        <span><?= $bulan ?></span><br />
+                                        <span style="font-size: 1.2em; font-weight: 600;"><?= $tanggal ?> </span><br />
+                                        <span><?= $tahun ?></span><br />
+                                    </div>
+                                    <!-- right box -->
+                                    <div class="col-lg-9">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h4><?= $data['nama_kegiatan'] ?></h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12"><?= $data['lokasi'] ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End box activity -->
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donasi/Transaksi -->
+    <div class="box box-body">
+        <div class="box-header with-border">
+            <h3 class="box-title">Donasi/Transaksi Terbaru</h3>
+        </div>
+        <!-- box body -->
+        <div class="box-body">
+            <div class="row">
+                <?php
+                $sql_donasi = "SELECT u.nama, d.jumlah, d.status_verifikasi FROM donasi d INNER JOIN users u ON d.id_user = u.id_user ORDER BY d.id_donasi DESC LIMIT 3";
+                $result = mysqli_query($con, $sql_donasi);
+                while ($data = mysqli_fetch_assoc($result)) {
+                ?>
+                    <!-- start donasi card -->
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <!-- small box -->
+                        <div style="border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 8px 20px; margin: 3px; max-width: 420px;">
+                            <div class="row">
+                                <div class="col-lg-8" style="vertical-align: middle;">
+                                    <h4><?= rupiah($data['jumlah']) ?></h4>
+                                </div>
+                                <div class="col-lg-4" style="vertical-align: middle;"><span class="<?= htmlspecialchars($data['status_verifikasi']) === 'verifikasi' ? 'bg-success' : (htmlspecialchars($data['status_verifikasi']) === 'pending' ? 'bg-info' : 'bg-warning') ?>" style="padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;"><?= strtoupper(htmlspecialchars($data['status_verifikasi'])) ?></span></div>
+                            </div>
+                            <div class="row" style="margin-top: 14px;">
+                                <div class="col-lg-12"><?= htmlspecialchars($data['nama']) ?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end donasi card -->
+                <?php } ?>
+            </div>
+        </div>
+    </div>
 </section>
 <!-- /.content -->
