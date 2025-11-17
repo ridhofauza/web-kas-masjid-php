@@ -186,13 +186,13 @@ $saldo['data'] = $pemasukan['data'] - $pengeluaran['data'];
                         <!-- small box -->
                         <div style="border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 8px 20px; margin: 3px; max-width: 420px;">
                             <div class="row">
-                                <div class="col-lg-8" style="vertical-align: middle;">
-                                    <h4><?= rupiah($data['jumlah']) ?></h4>
+                                <div class="col-lg-8">
+                                    <h4><?= htmlspecialchars($data['nama']) ?></h4>
                                 </div>
                                 <div class="col-lg-4" style="vertical-align: middle;"><span class="<?= htmlspecialchars($data['status_verifikasi']) === 'verifikasi' ? 'bg-success' : (htmlspecialchars($data['status_verifikasi']) === 'pending' ? 'bg-info' : 'bg-warning') ?>" style="padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600;"><?= strtoupper(htmlspecialchars($data['status_verifikasi'])) ?></span></div>
                             </div>
                             <div class="row" style="margin-top: 14px;">
-                                <div class="col-lg-12"><?= htmlspecialchars($data['nama']) ?></div>
+                                <div class="col-lg-12" style="font-size: 1.2em;"><?= rupiah($data['jumlah']) ?></div>
                             </div>
                         </div>
                     </div>
