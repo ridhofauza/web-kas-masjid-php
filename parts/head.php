@@ -100,18 +100,22 @@ switch ($page) {
   <![endif]-->
 
 <!-- Google Font -->
-<link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- DataTables -->
 <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
 <style>
+    body {
+        font-family: "Poppins", sans-serif;
+    }
+
     .sidebar-menu li {
         padding: 2px 0px;
         background-color: #ffffff;
         border-top: 1px solid #e0dede;
         color: #637381;
+        font-weight: 500;
     }
 
     .sidebar-menu li ul li {
@@ -152,7 +156,6 @@ switch ($page) {
         white-space: nowrap;
         overflow: hidden;
         color: #637382;
-        font-weight: 500;
         margin: .125rem .5rem;
         background-color: rgba(0, 0, 0, 0);
         line-height: 1.2;
