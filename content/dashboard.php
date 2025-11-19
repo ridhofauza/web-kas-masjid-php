@@ -72,7 +72,7 @@ $saldo['data'] = $pemasukan['data'] - $pengeluaran['data'];
     <div class="row">
         <div class="col-lg-4 col-sm-6 col-xs-12">
             <!-- small box -->
-            <div class="small-box bg-green" style="padding-top: 5px; padding-bottom: 5px">
+            <div class="small-box bg-green" style="padding-top: 5px; padding-bottom: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-radius: 8px;">
                 <div class="inner">
                     <h3><?= rupiah($pemasukan['data'] ?? 0) ?></h3>
 
@@ -87,7 +87,7 @@ $saldo['data'] = $pemasukan['data'] - $pengeluaran['data'];
         <!-- ./col -->
         <div class="col-lg-4 col-sm-6 col-xs-12">
             <!-- small box -->
-            <div class="small-box bg-aqua" style="padding-top: 5px; padding-bottom: 5px">
+            <div class="small-box bg-aqua" style="padding-top: 5px; padding-bottom: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-radius: 8px;">
                 <div class="inner">
                     <h3><?= rupiah(abs($pengeluaran['data'] ?? 0)) ?></h3>
 
@@ -102,7 +102,7 @@ $saldo['data'] = $pemasukan['data'] - $pengeluaran['data'];
         <!-- ./col -->
         <div class="col-lg-4 col-sm-6 col-xs-12">
             <!-- small box -->
-            <div class="small-box bg-yellow" style="padding-top: 5px; padding-bottom: 5px">
+            <div class="small-box bg-yellow" style="padding-top: 5px; padding-bottom: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-radius: 8px;">
                 <div class="inner">
                     <h3><?= rupiah($saldo['data'] ?? 0) ?></h3>
 

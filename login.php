@@ -30,13 +30,13 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition login-page">
+<body class="hold-transition" style="background-color: #f4f4f4;">
     <div class="login-box">
         <div class="login-logo">
             <a href=""><b>Aplikasi</b> Kas Masjid</a>
         </div>
         <!-- /.login-logo -->
-        <div class="login-box-body">
+        <div class="login-box-body" style="border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">
             <p class="login-box-msg">Masukkan E-mail dan Password terdaftar</p>
 
             <form action="ceklogin.php" method="POST">

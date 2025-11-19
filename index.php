@@ -70,7 +70,7 @@ desired effect
         <?php include "parts/sidebar.php"?>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="background-color: #f4f4f4;">
             <?php include "konten.php"?>
         </div>
         <!-- /.content-wrapper -->

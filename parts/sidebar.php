@@ -2,7 +2,7 @@
     $current_page = isset($_GET['hal']) ? $_GET['hal'] : 'dashboard';
 ?>
 
-<aside class="main-sidebar">
+<aside class="main-sidebar" style="background-color: #ffffff!important; box-shadow: 4px 4px 12px rgba(0,0,1,0.25);">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -14,7 +14,7 @@
                     class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p style="margin: 0;"><?=$_SESSION['nama']?></p>
+                <p style="margin: 0; color: #637381!important;"><?=$_SESSION['nama']?></p>
                 <!-- Status -->
                 <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
@@ -35,7 +35,7 @@
         <!-- /.search form -->
 
         <!-- Sidebar Menu -->
-        <ul class="sidebar-menu" data-widget="tree">
+        <ul class="sidebar-menu" data-widget="tree"> 
             <!-- <li class="header">HEADER</li> -->
             <!-- Optionally, you can add icons to the links -->
             <li class="<?php if ($current_page == 'dashboard') echo 'active'; ?>"><a href="?hal=dashboard">
