@@ -1,25 +1,6 @@
 <?php
 if (!defined('INDEX')) die("");
 
-/*
-    $pemasukan = mysqli_fetch_assoc(mysqli_query($con, "
-    SELECT SUM(nominal) AS data 
-    FROM transaksi 
-    WHERE nominal > 0 AND MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
-    "));
-
-    $pengeluaran = mysqli_fetch_assoc(mysqli_query($con, "
-        SELECT SUM(nominal) AS data 
-        FROM transaksi 
-        WHERE nominal < 0 AND MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
-    "));
-
-    $saldo = mysqli_fetch_assoc(mysqli_query($con, "
-        SELECT SUM(nominal) AS data 
-        FROM transaksi 
-        WHERE MONTH(tanggal) = MONTH(CURDATE()) AND YEAR(tanggal) = YEAR(CURDATE())
-    ")); */
-
 $pemasukan = mysqli_fetch_assoc(mysqli_query($con, "
     SELECT SUM(x.jumlah) as data FROM (SELECT
     'pemasukan' AS jenis,

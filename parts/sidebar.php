@@ -2,7 +2,7 @@
     $current_page = isset($_GET['hal']) ? $_GET['hal'] : 'dashboard';
 ?>
 
-<aside class="main-sidebar" style="background-color: #ffffff!important; box-shadow: 4px 4px 12px rgba(0,0,1,0.25);">
+<aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -14,7 +14,7 @@
                     class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p style="margin: 0; color: #637381!important;"><?=$_SESSION['nama']?></p>
+                <p><?=$_SESSION['nama']?></p>
                 <!-- Status -->
                 <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>

@@ -29,7 +29,6 @@ if (!defined('INDEX')) die("");
                                     <th style="border-color: #ddd;">Tanggal</th>
                                     <th style="border-color: #ddd;">Jenis</th>
                                     <th style="border-color: #ddd;">Jumlah</th>
-                                    <th style="border-color: #ddd;">Sumber</th>
                                     <th style="border-color: #ddd;">Keterangan</th>
                                     <th style="border-color: #ddd;">Donasi</th>
                                     <th style="border-color: #ddd;">Kategori</th>
@@ -52,7 +51,6 @@ if (!defined('INDEX')) die("");
                                     <td style="border-color: #ddd;"><?= $data['tanggal'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['jenis'] ?></td>
                                     <td style="border-color: #ddd;"><?= rupiah($data['jumlah']) ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['sumber'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['keterangan'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['keterangan_donasi'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['nama_kategori'] ?></td>

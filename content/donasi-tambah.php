@@ -1,5 +1,5 @@
 <?php
-if(!defined("INDEX")) die("");
+if (!defined("INDEX")) die("");
 ?>
 
 <!-- SELECT2 EXAMPLE -->
@@ -17,19 +17,10 @@ if(!defined("INDEX")) die("");
                         <div class="box-body">
 
                             <div class="form-group row" style="display: flex; align-items: center;">
-                                <label for="donatur" class="col-sm-2 col-form-label">Donatur</label>
+                                <label for="nama_donatur" class="col-sm-2 col-form-label">Nama Donatur</label>
                                 <div class="col-sm-6">
-                                    <select name="donatur" id="donatur" class="form-control" required>
-                                        <option value="" disabled selected hidden>Pilih Donatur</option>
-                                       <?php 
-                                       $sql_donatur = "SELECT id_user, nama FROM users";
-                                       $stmt = mysqli_prepare($con, $sql_donatur);
-                                       mysqli_stmt_execute($stmt);
-                                       $result = mysqli_stmt_get_result($stmt);
-                                       while($data = mysqli_fetch_assoc($result)) { ?>
-                                          <option value="<?= $data['id_user'] ?>"><?= $data['id_user'].' - '. $data['nama'] ?></option>
-                                       <?php } ?>
-                                    </select>
+                                    <input type="text" name="nama_donatur" id="nama_donatur" class="form-control" maxlength="255" required>
+                                    <input type="hidden" name="id_pembuat" value="<?= $_SESSION['id_user'] ?>">
                                 </div>
                             </div>
 
@@ -39,14 +30,14 @@ if(!defined("INDEX")) die("");
                                     <select name="kegiatan" id="kegiatan" class="form-control">
                                         <option value="" disabled selected hidden>Pilih Kegiatan</option>
                                         <option value="">-</option>
-                                       <?php 
-                                       $sql_kegiatan = "SELECT id_kegiatan, nama_kegiatan FROM kegiatan_masjid";
-                                       $stmt = mysqli_prepare($con, $sql_kegiatan);
-                                       mysqli_stmt_execute($stmt);
-                                       $result = mysqli_stmt_get_result($stmt);
-                                       while($data = mysqli_fetch_assoc($result)) { ?>
-                                          <option value="<?= $data['id_kegiatan'] ?>"><?= $data['id_kegiatan'].' - '. $data['nama_kegiatan'] ?></option>
-                                       <?php } ?>
+                                        <?php
+                                        $sql_kegiatan = "SELECT id_kegiatan, nama_kegiatan FROM kegiatan_masjid";
+                                        $stmt = mysqli_prepare($con, $sql_kegiatan);
+                                        mysqli_stmt_execute($stmt);
+                                        $result = mysqli_stmt_get_result($stmt);
+                                        while ($data = mysqli_fetch_assoc($result)) { ?>
+                                            <option value="<?= $data['id_kegiatan'] ?>"><?= $data['nama_kegiatan'] ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>

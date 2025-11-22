@@ -71,7 +71,7 @@ if (!$data) {
                               $result = mysqli_stmt_get_result($stmt);
                               while ($option = mysqli_fetch_assoc($result)) {
                               ?>
-                                 <option value="<?= $option['id_donasi'] ?>" <?= $option['id_donasi'] == $data['id_donasi'] ? 'selected' : '' ?>><?= $option['id_donasi'] . ' - ' . htmlspecialchars($option['keterangan']) ?></option>
+                                 <option value="<?= $option['id_donasi'] ?>" <?= $option['id_donasi'] == $data['id_donasi'] ? 'selected' : '' ?>><?= htmlspecialchars($option['keterangan']) ?></option>
                               <?php } ?>
                            </select>
                         </div>
@@ -90,7 +90,7 @@ if (!$data) {
                               $result = mysqli_stmt_get_result($stmt);
                               while ($option = mysqli_fetch_assoc($result)) {
                               ?>
-                                 <option value="<?= $option['id_kategori'] ?>" <?= $option['id_kategori'] == $data['id_kategori'] ? 'selected' : '' ?>><?= $option['id_kategori'] . ' - ' . $option['nama_kategori'] ?></option>
+                                 <option value="<?= $option['id_kategori'] ?>" <?= $option['id_kategori'] == $data['id_kategori'] ? 'selected' : '' ?>><?= $option['nama_kategori'] ?></option>
                               <?php } ?>
                            </select>
                         </div>

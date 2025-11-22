@@ -32,18 +32,10 @@ if (!$data) {
                      <input type="hidden" name="id_donasi" value="<?= $data['id_donasi'] ?>">
 
                      <div class="form-group row" style="display: flex; align-items: center;">
-                        <label for="donatur" class="col-sm-2 col-form-label">Donatur</label>
+                        <label for="nama_donatur" class="col-sm-2 col-form-label">Nama Donatur</label>
                         <div class="col-sm-6">
-                           <select name="donatur" id="donatur" class="form-control" required>
-                              <?php
-                              $sql_donatur = "SELECT id_user, nama FROM users";
-                              $stmt = mysqli_prepare($con, $sql_donatur);
-                              mysqli_stmt_execute($stmt);
-                              $result = mysqli_stmt_get_result($stmt);
-                              while ($option = mysqli_fetch_assoc($result)) { ?>
-                                 <option value="<?= $option['id_user'] ?>" <?= $data['id_user'] == $option['id_user'] ? 'selected' : ''; ?>><?= $option['id_user'] . ' - ' . $option['nama'] ?></option>
-                              <?php } ?>
-                           </select>
+                           <input type="text" name="nama_donatur" id="nama_donatur" class="form-control" maxlength="255" value="<?= $data['nama_donatur'] ?>" required>
+                           <input type="hidden" name="id_pengubah" value="<?= $_SESSION['id_user'] ?>">
                         </div>
                      </div>
 
@@ -59,7 +51,7 @@ if (!$data) {
                               mysqli_stmt_execute($stmt);
                               $result = mysqli_stmt_get_result($stmt);
                               while ($option = mysqli_fetch_assoc($result)) { ?>
-                                 <option value="<?= $option['id_kegiatan'] ?>" <?= $data['id_kegiatan'] == $option['id_kegiatan'] ? 'selected' : ''; ?>><?= $option['id_kegiatan'] . ' - ' . $option['nama_kegiatan'] ?></option>
+                                 <option value="<?= $option['id_kegiatan'] ?>" <?= $data['id_kegiatan'] == $option['id_kegiatan'] ? 'selected' : ''; ?>><?= $option['nama_kegiatan'] ?></option>
                               <?php } ?>
                            </select>
                         </div>
@@ -110,7 +102,7 @@ if (!$data) {
                         <label for="bukti_transfer" class="col-sm-2 col-form-label">Bukti Transfer</label>
                         <div class="col-sm-6">
                            <input type="hidden" name="bukti_transfer_old" value="<?= $data['bukti_transfer'] ?>">
-                           <input type="file" name="bukti_transfer" id="bukti_transfer" accept="image/*" class="form-control" style="margin-bottom: 20px;" >
+                           <input type="file" name="bukti_transfer" id="bukti_transfer" accept="image/*" class="form-control" style="margin-bottom: 20px;">
                            <?php if (!empty($data['bukti_transfer'])) { ?>
                               <img src="<?= $data['bukti_transfer'] ?>" alt="Bukti Transfer"
                                  style="width: 50px; height: 50px; border-radius: 100%;">

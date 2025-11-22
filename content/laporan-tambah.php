@@ -67,7 +67,7 @@ if (!defined("INDEX")) die("");
                         while ($data = mysqli_fetch_assoc($result)) {
                         ?>
                            <div class="col-sm-6">
-                              <input type="text" name="nama_user" id="nama_user" class="form-control" maxlength="100" value="<?= $data['id_user'] . ' - ' . $data['nama'] ?>" readonly required>
+                              <input type="text" name="nama_user" id="nama_user" class="form-control" maxlength="100" value="<?= $data['nama'] ?>" readonly required>
                            </div>
                         <?php } ?>
                      </div>

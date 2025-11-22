@@ -15,12 +15,7 @@ if (!defined("INDEX")) die("");
             <div class="col-md-6">
                <form action="?hal=keuangan-insert" method="POST">
                   <div class="box-body">
-                     <div class="form-group row" style="display: flex; align-items: center;">
-                        <label for="sumber" class="col-sm-2 col-form-label">Sumber</label>
-                        <div class="col-sm-6">
-                           <input type="text" name="sumber" id="sumber" class="form-control" maxlength="100" required>
-                        </div>
-                     </div>
+                     <input type="hidden" name="sumber" id="sumber" value="jemaah" class="form-control" maxlength="100" required>
                      <div class="form-group row" style="display: flex; align-items: center;">
                         <label for="tanggal" class="col-sm-2 col-form-label">Tanggal</label>
                         <div class="col-sm-6">
@@ -50,7 +45,7 @@ if (!defined("INDEX")) die("");
                                  $result = mysqli_stmt_get_result($stmt);
                                  while($data = mysqli_fetch_assoc($result)) { 
                               ?>
-                              <option value="<?= $data['id_donasi'] ?>"><?= $data['id_donasi'].' - '.htmlspecialchars($data['keterangan']) ?></option>
+                              <option value="<?= $data['id_donasi'] ?>"><?= htmlspecialchars($data['keterangan']) ?></option>
                               <?php } ?>
                            </select>
                         </div>
@@ -68,7 +63,7 @@ if (!defined("INDEX")) die("");
                                  $result = mysqli_stmt_get_result($stmt);
                                  while($data = mysqli_fetch_assoc($result)) {
                               ?>
-                              <option value="<?= $data['id_kategori'] ?>"><?= $data['id_kategori'].' - '.$data['nama_kategori'] ?></option>
+                              <option value="<?= $data['id_kategori'] ?>"><?= $data['nama_kategori'] ?></option>
                               <?php } ?>
                            </select>
                         </div>

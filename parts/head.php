@@ -99,72 +99,8 @@ switch ($page) {
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <!-- DataTables -->
 <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
 
-<style>
-    body {
-        font-family: "Poppins", sans-serif;
-    }
-
-    .sidebar-menu li {
-        padding: 2px 0px;
-        background-color: #ffffff;
-        border-top: 1px solid #e0dede;
-        color: #637381;
-        font-weight: 500;
-    }
-
-    .sidebar-menu li ul li {
-        padding: 2px 0px;
-        border-top: 1px solid #e0dede;
-    }
-
-    .skin-green .sidebar a {
-        color: #637381;
-    }
-
-    .main-sidebar {
-        background-color: #ffffff;
-    }
-
-    .skin-green .sidebar-menu .treeview-menu>li>a {
-        color: #637381;
-    }
-
-    .skin-green .sidebar-menu>li>.treeview-menu {
-        background: #c4c4c4;
-    }
-
-    .skin-green .sidebar-menu>li.active>a {
-        border-left: none;
-    }
-
-    .skin-green .sidebar-menu>li:hover>a,
-    .skin-green .sidebar-menu>li.active>a,
-    .skin-green .sidebar-menu>li.menu-open>a {
-        color: #007867;
-        background-color: #c8fad6;
-    }
-
-    .skin-green .sidebar-menu>li:hover,
-    .skin-green .sidebar-menu>li.active,
-    .skin-green .sidebar-menu>li.menu-open {
-        white-space: nowrap;
-        overflow: hidden;
-        color: #637382;
-        margin: .125rem .5rem;
-        background-color: rgba(0, 0, 0, 0);
-        line-height: 1.2;
-    }
-
-    .skin-green .sidebar-menu .treeview-menu>li.active>a,
-    .skin-green .sidebar-menu .treeview-menu>li>a:hover {
-        color: #637381;
-        background-color: #f4f4f4;
-        margin-right: 1em;
-    }
-</style>
+<link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">

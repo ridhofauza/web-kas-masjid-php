@@ -2,7 +2,8 @@
 if (!defined("INDEX")) die("");
 
 // Mengambil data dari form
-$id_donatur = $_POST['donatur'];
+$id_pembuat = $_POST['id_pembuat'];
+$nama_donatur = $_POST['nama_donatur'];
 $id_kegiatan = isset($_POST['kegiatan']) ? $_POST['kegiatan'] : null;
 $id_kegiatan = empty($id_kegiatan) ? null : $id_kegiatan;
 $tanggal_donasi = $_POST['tanggal_donasi'];
@@ -20,9 +21,9 @@ if (isset($_FILES['bukti_transfer']) && $_FILES['bukti_transfer']['error'] == 0)
     // Memindahkan file ke folder tujuan
     if (move_uploaded_file($_FILES['bukti_transfer']['tmp_name'], $target_file)) {
         // Menyimpan data ke database
-        $query = "INSERT INTO donasi (id_user, id_kegiatan, tanggal_donasi, jumlah, metode_pembayaran, bukti_transfer, status_verifikasi, keterangan) VALUES (?,?,?,?,?,?,?,?)";
+        $query = "INSERT INTO donasi (id_user, id_kegiatan, tanggal_donasi, jumlah, metode_pembayaran, bukti_transfer, status_verifikasi, keterangan, nama_donatur) VALUES (?,?,?,?,?,?,?,?,?)";
         $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, "iisissss", $id_donatur, $id_kegiatan, $tanggal_donasi, $jumlah, $metode_pembayaran, $target_file, $status_verifikasi, $keterangan);
+        mysqli_stmt_bind_param($stmt, "iisisssss", $id_pembuat, $id_kegiatan, $tanggal_donasi, $jumlah, $metode_pembayaran, $target_file, $status_verifikasi, $keterangan, $nama_donatur);
 
         if (mysqli_stmt_execute($stmt)) { ?>
             <style>

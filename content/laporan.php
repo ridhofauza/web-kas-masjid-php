@@ -29,7 +29,6 @@ if (!defined('INDEX')) die("");
                            <th style="border-color: #ddd;">Total Pemasukan</th>
                            <th style="border-color: #ddd;">Total Pengeluaran</th>
                            <th style="border-color: #ddd;">Saldo Akhir</th>
-                           <th style="border-color: #ddd;">Dibuat Oleh</th>
                            <th style="border-color: #ddd;">Tanggal Dibuat</th>
                            <th style="border-color: #ddd;">Aksi</th>
                         </tr>
@@ -49,7 +48,6 @@ if (!defined('INDEX')) die("");
                               <td style="border-color: #ddd;"><?= rupiah($data['total_pemasukan']) ?></td>
                               <td style="border-color: #ddd;"><?= rupiah($data['total_pengeluaran']) ?></td>
                               <td style="border-color: #ddd;"><?= rupiah($data['saldo_akhir']) ?></td>
-                              <td style="border-color: #ddd;"><?= $data['nama_pembuat'] ?></td>
                               <td style="border-color: #ddd;"><?= $data['tanggal_dibuat'] ?></td>
                               <!-- Tombol Aksi -->
                               <td style="border-color: #ddd;">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2025 at 08:16 PM
+-- Generation Time: Nov 22, 2025 at 01:59 PM
 -- Server version: 10.6.4-MariaDB-log
 -- PHP Version: 8.1.4
 
@@ -36,17 +36,19 @@ CREATE TABLE `donasi` (
   `metode_pembayaran` enum('transfer_bank','qris','tunai') NOT NULL,
   `bukti_transfer` varchar(255) NOT NULL,
   `status_verifikasi` enum('pending','verifikasi','rejected') NOT NULL,
-  `keterangan` text NOT NULL
+  `keterangan` text NOT NULL,
+  `nama_donatur` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `donasi`
 --
 
-INSERT INTO `donasi` (`id_donasi`, `id_user`, `id_kegiatan`, `tanggal_donasi`, `jumlah`, `metode_pembayaran`, `bukti_transfer`, `status_verifikasi`, `keterangan`) VALUES
-(14, 2, 4, '2025-11-16', '350000', 'transfer_bank', 'uploads/bukti_transfer/20251116200854_androidparty.png', 'verifikasi', 'donasi untuk pengajian'),
-(15, 7, 5, '2025-11-17', '120000', 'qris', 'uploads/bukti_transfer/20251116201042_androidparty.png', 'verifikasi', 'donasi untuk banjari'),
-(16, 2, NULL, '2025-11-18', '50000', 'tunai', 'uploads/bukti_transfer/20251116201126_islamic_mosque.png', 'pending', 'donasi kegiatan');
+INSERT INTO `donasi` (`id_donasi`, `id_user`, `id_kegiatan`, `tanggal_donasi`, `jumlah`, `metode_pembayaran`, `bukti_transfer`, `status_verifikasi`, `keterangan`, `nama_donatur`) VALUES
+(14, 2, 4, '2025-11-16', '350000', 'transfer_bank', 'uploads/bukti_transfer/20251116200854_androidparty.png', 'verifikasi', 'donasi untuk pengajian', 'Ali'),
+(15, 7, 5, '2025-11-17', '120000', 'qris', 'uploads/bukti_transfer/20251116201042_androidparty.png', 'verifikasi', 'donasi untuk banjari', 'Bimbim'),
+(16, 2, NULL, '2025-11-18', '50000', 'tunai', 'uploads/bukti_transfer/20251116201126_islamic_mosque.png', 'pending', 'donasi kegiatan', 'Doni'),
+(18, 1, 4, '2025-11-22', '120000', 'transfer_bank', 'uploads/bukti_transfer/20251122135747_androidparty.png', 'verifikasi', 'Donasi pengajian', 'Purbaya');
 
 -- --------------------------------------------------------
 
@@ -141,7 +143,8 @@ CREATE TABLE `laporan` (
 --
 
 INSERT INTO `laporan` (`id_laporan`, `periode`, `total_pemasukan`, `total_pengeluaran`, `saldo_akhir`, `dibuat_oleh`, `tanggal_dibuat`, `file_pdf`) VALUES
-(9, 'November 2025', '490000', '245000', '245000', 1, '2025-11-16 20:14:49', 'uploads/laporan_pdf/laporan_November_2025_20251116201449.pdf');
+(17, 'November 2025', '490000', '245000', '245000', 1, '2025-11-21 19:07:44', 'uploads/laporan_pdf/laporan_November_2025_20251121190744.pdf'),
+(18, 'November 2025', '610000', '245000', '365000', 1, '2025-11-22 13:58:20', 'uploads/laporan_pdf/laporan_November_2025_20251122135820.pdf');
 
 -- --------------------------------------------------------
 
@@ -248,7 +251,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `donasi`
 --
 ALTER TABLE `donasi`
-  MODIFY `id_donasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_donasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `kategori_keuangan`
@@ -272,7 +275,7 @@ ALTER TABLE `keuangan`
 -- AUTO_INCREMENT for table `laporan`
 --
 ALTER TABLE `laporan`
-  MODIFY `id_laporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_laporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `users`

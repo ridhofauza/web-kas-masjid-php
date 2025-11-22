@@ -63,10 +63,9 @@ function generatePDF($data, $bulan, $tahun, $dibuat_oleh)
    $pdf->SetFont('Arial', 'B', 10);
 
    // Style tabel
-   $pdf->SetXY(8, 30); // Ubah nilai Y menjadi 30
+   $pdf->SetXY(20, 30); // Ubah nilai Y menjadi 30
    $pdf->Cell(8, 7, 'No', 1, 0, 'C');
    $pdf->Cell(20, 7, 'Tanggal', 1, 0, 'C');
-   $pdf->Cell(28, 7, 'Sumber Dana', 1, 0, 'C');
    $pdf->Cell(28, 7, 'Sumber Donasi', 1, 0, 'C');
    $pdf->Cell(20, 7, 'Jenis', 1, 0, 'C');
    $pdf->Cell(30, 7, 'Kategori', 1, 0, 'C');
@@ -94,24 +93,16 @@ function generatePDF($data, $bulan, $tahun, $dibuat_oleh)
          }
 
          // Hitung tinggi masing-masing kolom
-         $h1 = nbLines($pdf, 28, $row['sumber_dana']) * 6;
          $h2 = nbLines($pdf, 28, $row['sumber_donasi']) * 6;
          $h3 = nbLines($pdf, 30, $row['kategori']) * 6;
          $h4 = nbLines($pdf, 30, $row['rincian']) * 6;
 
-         $rowHeight = max($h1, $h2, $h3, $h4, 6);
+         $rowHeight = max($h2, $h3, $h4, 6);
 
          // Cetak sel tetap
-         $pdf->SetXY(8, $y);
+         $pdf->SetXY(20, $y);
          $pdf->Cell(8,  $rowHeight, $no++, 1, 0, 'C');
          $pdf->Cell(20, $rowHeight, $row['tanggal'], 1, 0, 'C');
-
-         // Sumber Dana
-         $x = $pdf->GetX();
-         $pdf->SetXY($x, $y);
-         $pdf->MultiCell(28, 6, html_entity_decode($row['sumber_dana']), 0, 'L');
-         $pdf->Rect($x, $y, 28, $rowHeight);
-         $pdf->SetXY($x + 28, $y);
 
          // Sumber Donasi
          $x = $pdf->GetX();
@@ -147,25 +138,25 @@ function generatePDF($data, $bulan, $tahun, $dibuat_oleh)
 
       // Tambahkan baris total di bawah tabel
       $totalNominal = $temp_total_pemasukan - $temp_total_pengeluaran;
-      $pdf->SetXY(8, $y);
+      $pdf->SetXY(20, $y);
       $pdf->SetFont('Arial', 'B', 9);
-      $pdf->Cell(164, 6, 'Saldo Akhir', 1, 0, 'C');
+      $pdf->Cell(136, 6, 'Saldo Akhir', 1, 0, 'C');
       $pdf->Cell(30, 6, rupiah($totalNominal), 1, 0, 'R');
    } else {
       $y += 6;
       $pdf->SetFont('Arial', 'I', 10);
-      $pdf->SetXY(8, $y);
-      $pdf->Cell(194, 7, 'Data tidak ditemukan', 0, 0, 'C');
+      $pdf->SetXY(20, $y);
+      $pdf->Cell(166, 7, 'Data tidak ditemukan', 0, 0, 'C');
    }
    $pdf->Ln();
    $y += 6;
-   $pdf->SetXY(8, $y);
+   $pdf->SetXY(20, $y);
    $pdf->SetFont('Arial', 'I', 7);
-   $pdf->Cell(194, 7, 'Dibuat oleh: ' . $dibuat_oleh, 0, 0);
+   $pdf->Cell(160, 7, 'Dibuat oleh: ' . $dibuat_oleh, 0, 0);
    $y += 3;
-   $pdf->SetXY(8, $y);
+   $pdf->SetXY(20, $y);
    $pdf->SetFont('Arial', 'I', 7);
-   $pdf->Cell(194, 7, 'Tanggal dibuat: ' . date('Y-m-d H:i:s'), 0, 0);
+   $pdf->Cell(160, 7, 'Tanggal dibuat: ' . date('Y-m-d H:i:s'), 0, 0);
 
    $filename_pdf = 'laporan_' . $bulan . '_' . $tahun . '_' . date('YmdHis') . '.pdf';
    $filepath_pdf = 'uploads/laporan_pdf/' . $filename_pdf;

@@ -1,7 +1,7 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="index2.html" class="logo" style="background-color: #ffffff!important;">
-        <span class="logo-lg" style="color: #00a76f!important"><b>Kas</b> Masjid</span>
+    <a href="index2.html" class="logo">
+        <span class="logo-lg"><b>Kas</b> Masjid</span>
     </a>
 
     <!-- Header Navbar -->

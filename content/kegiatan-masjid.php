@@ -29,7 +29,6 @@ if (!defined('INDEX')) die("");
                                     <th style="border-color: #ddd;">Tanggal Mulai</th>
                                     <th style="border-color: #ddd;">Tanggal Selesai</th>
                                     <th style="border-color: #ddd;">Lokasi</th>
-                                    <th style="border-color: #ddd;">Dibuat Oleh</th>
                                     <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <th style="border-color: #ddd;">Aksi</th>
                                     <?php endif; ?>
@@ -51,7 +50,6 @@ if (!defined('INDEX')) die("");
                                     <td style="border-color: #ddd;"><?= $data['tanggal_mulai'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['tanggal_selesai'] ?></td>
                                     <td style="border-color: #ddd;"><?= $data['lokasi'] ?></td>
-                                    <td style="border-color: #ddd;"><?= $data['nama_pembuat'] ?></td>
                                     <?php if ($_SESSION['role'] === 'admin'): ?>
                                     <!-- Tombol Aksi -->
                                     <td style="border-color: #ddd;">

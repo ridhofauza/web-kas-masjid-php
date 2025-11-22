@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "root";
-// $pass = "";
+// $pass = "root";
+$pass = "";
 $db = "kas_masjid";
 
 $con = mysqli_connect($host, $user, $pass, $db);

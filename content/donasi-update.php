@@ -8,9 +8,10 @@ if (!defined("INDEX")) die("");
 // Pastikan metode POST digunakan
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $id_donasi = $_POST['id_donasi'];
-   $id_donatur = $_POST['donatur'];
+   $id_pengubah = $_POST['id_pengubah'];   
    $id_kegiatan = isset($_POST['kegiatan']) ? $_POST['kegiatan'] : null;
    $id_kegiatan = empty($id_kegiatan) ? null : $id_kegiatan;
+   $nama_donatur = $_POST['nama_donatur'];
    $tanggal_donasi = $_POST['tanggal_donasi'];
    $jumlah = htmlspecialchars($_POST['jumlah']);
    $keterangan = htmlspecialchars($_POST['keterangan']);
@@ -49,13 +50,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
    // Update data donasi
    if ($bukti_transfer) {
-      $query = "UPDATE donasi SET id_user = ?, id_kegiatan = ?, tanggal_donasi = ?, jumlah = ?, metode_pembayaran = ?, bukti_transfer = ?, status_verifikasi = ?, keterangan = ? WHERE id_donasi = ?";
+      $query = "UPDATE donasi SET id_user = ?, id_kegiatan = ?, tanggal_donasi = ?, jumlah = ?, metode_pembayaran = ?, bukti_transfer = ?, status_verifikasi = ?, keterangan = ?, nama_donatur = ? WHERE id_donasi = ?";
       $stmt = mysqli_prepare($con, $query);
-      mysqli_stmt_bind_param($stmt, "iisissssi", $id_donatur, $id_kegiatan, $tanggal_donasi, $jumlah, $metode_pembayaran, $bukti_transfer, $status_verifikasi, $keterangan, $id_donasi);
+      mysqli_stmt_bind_param($stmt, "iisisssssi", $id_pengubah, $id_kegiatan, $tanggal_donasi, $jumlah, $metode_pembayaran, $bukti_transfer, $status_verifikasi, $keterangan, $nama_donatur, $id_donasi);
    } else {
-      $query = "UPDATE donasi SET id_user = ?, id_kegiatan = ?, tanggal_donasi = ?, jumlah = ?, metode_pembayaran = ?, status_verifikasi = ?, keterangan = ? WHERE id_donasi = ?";
+      $query = "UPDATE donasi SET id_user = ?, id_kegiatan = ?, tanggal_donasi = ?, jumlah = ?, metode_pembayaran = ?, status_verifikasi = ?, keterangan = ?, nama_donatur = ? WHERE id_donasi = ?";
       $stmt = mysqli_prepare($con, $query);
-      mysqli_stmt_bind_param($stmt, "iisisssi", $id_donatur, $id_kegiatan, $tanggal_donasi, $jumlah, $metode_pembayaran, $status_verifikasi, $keterangan, $id_donasi);
+      mysqli_stmt_bind_param($stmt, "iisissssi", $id_pengubah, $id_kegiatan, $tanggal_donasi, $jumlah, $metode_pembayaran, $status_verifikasi, $keterangan, $nama_donatur, $id_donasi);
    }
 
    // Eksekusi query dan tampilkan notifikasi

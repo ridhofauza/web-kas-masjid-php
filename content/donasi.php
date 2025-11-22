@@ -2,7 +2,7 @@
 if (!defined('INDEX')) die("Akses langsung tidak diizinkan.");
 
 // Ambil data pengguna dari database
-$query = "SELECT u.nama as nama_donatur, IFNULL(k.nama_kegiatan,'-') as nama_kegiatan, d.* FROM donasi d INNER JOIN users u ON u.id_user = d.id_user LEFT JOIN kegiatan_masjid k ON k.id_kegiatan = d.id_kegiatan ORDER BY d.id_donasi DESC, d.tanggal_donasi DESC";
+$query = "SELECT u.nama as dibuat_oleh, IFNULL(k.nama_kegiatan,'-') as nama_kegiatan, d.* FROM donasi d INNER JOIN users u ON u.id_user = d.id_user LEFT JOIN kegiatan_masjid k ON k.id_kegiatan = d.id_kegiatan ORDER BY d.id_donasi DESC, d.tanggal_donasi DESC";
 $result = mysqli_query($con, $query);
 $no = 0;
 ?>
